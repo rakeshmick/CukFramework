@@ -1,10 +1,18 @@
 package com.test.cukframework.stepDefinition;
 
 
+
+import java.util.List;
 import java.util.concurrent.TimeUnit;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 
+import com.test.cukframework.dataProvider.ConfigFileReader;
+import com.test.cukframework.managers.FileReaderManager;
+import com.test.cukframework.managers.PageObjectManager;
+import com.test.cukframework.managers.WebDriverManager;
 import com.test.cukframework.pageobjects.CartPage;
 import com.test.cukframework.pageobjects.CheckoutPage;
 import com.test.cukframework.pageobjects.HomePage;
@@ -13,50 +21,55 @@ import com.test.cukframework.pageobjects.ProductListingPage;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.When;
 
+
+
+
 public class Steps {
 	WebDriver driver;
-	HomePage home;
+	HomePage homePage;
 	ProductListingPage productListingPage;
 	CartPage cartPage;
 	CheckoutPage checkoutPage;
+	PageObjectManager pageObjectManager;	
+	WebDriverManager webDriverManager;
+	
 	
 	@Given("^user is on Home Page$")
 	public void user_is_on_Home_Page(){
-	//	System.setProperty("webdriver.chrome.driver","C:\\ToolsQA\\Libs\\Drivers\\chromedriver.exe");
-		driver = new ChromeDriver();
-		driver.manage().window().maximize();
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-		driver.get("http://www.shop.demoqa.com");
+		webDriverManager = new WebDriverManager();
+		driver = webDriverManager.getDriver();
+		pageObjectManager = new PageObjectManager(driver);
+		homePage = pageObjectManager.getHomePage();
+		homePage.navigateTo_HomePage();	
 	}
 
 	@When("^he search for \"([^\"]*)\"$")
 	public void he_search_for(String product)  {
-		home = new HomePage(driver);
-		home.perform_Search(product);
+		homePage.perform_Search(product);
 	}
 
 	@When("^choose to buy the first item$")
 	public void choose_to_buy_the_first_item() {
-		productListingPage = new ProductListingPage(driver);
+		productListingPage = pageObjectManager.getProductListingPage();
 		productListingPage.select_Product(0);
 		productListingPage.clickOn_AddToCart();		
 	}
 
 	@When("^moves to checkout from mini cart$")
 	public void moves_to_checkout_from_mini_cart(){
-		cartPage = new CartPage(driver);
+		cartPage = pageObjectManager.getCartPage();
 		cartPage.clickOn_Cart();
 		cartPage.clickOn_ContinueToCheckout();	
 	}
 	
 	@When("^enter personal details on checkout page$")
-	public void enter_personal_details_on_checkout_page() throws InterruptedException {
-		checkoutPage = new CheckoutPage(driver);
+	public void enter_personal_details_on_checkout_page(){
+		checkoutPage = pageObjectManager.getCheckoutPage();
 		checkoutPage.fill_PersonalDetails();	
 	}
 	
 	@When("^select same delivery address$")
-	public void select_same_delivery_address() throws InterruptedException{
+	public void select_same_delivery_address(){
 		checkoutPage.check_ShipToDifferentAddress(false);
 	}
 	
@@ -66,10 +79,9 @@ public class Steps {
 	}
 
 	@When("^place the order$")
-	public void place_the_order() throws InterruptedException {
+	public void place_the_order() {
 		checkoutPage.check_TermsAndCondition(true);
-		checkoutPage.clickOn_PlaceOrder();
-		
-		driver.quit();
+		checkoutPage.clickOn_PlaceOrder();		
+		webDriverManager.closeDriver();
 	}	
 }
