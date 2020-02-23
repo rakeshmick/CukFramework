@@ -38,6 +38,7 @@ public class AddtoWishlist {
 	
 	public void clickonproduct()
 	{
+
 		prd_check.click();
 	}
 	

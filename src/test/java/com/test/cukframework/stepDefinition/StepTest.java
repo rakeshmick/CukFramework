@@ -19,37 +19,44 @@ import io.cucumber.java.en.And;
 public class StepTest {
 
 WebDriver driver;
-AddtoWishlist AddtoWishlist;
-
+AddtoWishlist AddtoWish;
+WebDriverManager webDriverManager;
+PageObjectManager pageObjectManager;	
 
 
 @And ("^user clicks on a product$")
 public void SearchforProduct()
 
 {
-	AddtoWishlist.clickonproduct();
+	webDriverManager = new WebDriverManager();
+	driver = webDriverManager.getDriver();
+	pageObjectManager = new PageObjectManager(driver);
+	AddtoWish = pageObjectManager.getAddtoWishlist();
+	
+	AddtoWish.clickonproduct();
 }
 
 @And ("^user selects color \"([^\"]*)\"$")
 public void selectPink(String color)
 {
-	AddtoWishlist.Selectcolor(color);
+	
+	AddtoWish.Selectcolor(color);
 }
 
 @And ("^user selects size \"([^\"]*)\"$")
 public void selectsizerequired(String size) {
-	AddtoWishlist.Selectsize(size);
+	AddtoWish.Selectsize(size);
 }
 
 @And("^user selects quantity$")
 
 public void selectquantityrequired()
 {
-	AddtoWishlist.selectquantity();
+	AddtoWish.selectquantity();
 }
 @And("^user creates a wishlist$")
 public void createmywishlist()
 {
-	AddtoWishlist.AddtoWishmylist();
+	AddtoWish.AddtoWishmylist();
 }
 }
