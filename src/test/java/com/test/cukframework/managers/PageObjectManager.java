@@ -6,7 +6,7 @@ package com.test.cukframework.managers;
 
 import org.openqa.selenium.WebDriver;
 
-
+import com.test.cukframework.pageobjects.AddtoWishlist;
 import com.test.cukframework.pageobjects.CartPage;
 import com.test.cukframework.pageobjects.CheckoutPage;
 import com.test.cukframework.pageobjects.HomePage;
@@ -25,6 +25,8 @@ public class PageObjectManager {
 	private HomePage homePage;
 
 	private CheckoutPage checkoutPage;
+	
+	private AddtoWishlist AddtoWish;
 
 	
 
@@ -63,6 +65,12 @@ public class PageObjectManager {
 	public CheckoutPage getCheckoutPage() {
 
 		return (checkoutPage == null) ? checkoutPage = new CheckoutPage(driver) : checkoutPage;
+
+	}
+	
+	public AddtoWishlist getAddtoWishlist() {
+
+		return (AddtoWish == null) ? AddtoWish = new AddtoWishlist(driver) : AddtoWish;
 
 	}
 }
