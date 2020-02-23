@@ -14,7 +14,10 @@ import com.test.cukframework.managers.PageObjectManager;
 
 
 import com.test.cukframework.pageobjects.AddtoWishlist;
+import com.test.cukframework.pageobjects.HomePage;
+
 import io.cucumber.java.en.And;
+import io.cucumber.java.en.Given;
 
 public class StepTest {
 
@@ -22,9 +25,10 @@ WebDriver driver;
 AddtoWishlist AddtoWish;
 WebDriverManager webDriverManager;
 PageObjectManager pageObjectManager;	
+HomePage HomePage;
 
 
-@And ("^user clicks on a product$")
+@Given("^user clicks on a product$")
 public void SearchforProduct()
 
 {
@@ -32,7 +36,8 @@ public void SearchforProduct()
 	driver = webDriverManager.getDriver();
 	pageObjectManager = new PageObjectManager(driver);
 	AddtoWish = pageObjectManager.getAddtoWishlist();
-	
+	HomePage = pageObjectManager.getHomePage();
+	HomePage.navigateTo_HomePage();
 	AddtoWish.clickonproduct();
 }
 
