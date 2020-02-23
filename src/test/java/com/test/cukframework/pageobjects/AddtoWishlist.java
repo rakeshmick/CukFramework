@@ -21,11 +21,18 @@ public class AddtoWishlist {
 	WebElement prd_check;
 	
 	@FindBy(how = How.CSS, using ="select#pa_color") 
-	WebElement color;
+	WebElement colorselector;
+	
+	@FindBy(how = How.CSS, using ="select#pa_size") 
+	WebElement sizeselector;
+	
+	@FindBy(how = How.CSS, using ="i.icon_plus") 
+	WebElement quantityselector;
+	
+	@FindBy(how = How.CSS,using ="a.add_to_wishlist single_add_to_wishlist")
+	WebElement wishlisticon;
 	
 	
-	
-	//Select sel = new Select(driver.findElement(By.cssSelector("select#pa_color")));
 	
 	
 	
@@ -34,9 +41,24 @@ public class AddtoWishlist {
 		prd_check.click();
 	}
 	
-	public void Selectcolor() {
-		Select sel = new Select(color);
-		color.selectByValue("pink");
+	public void Selectcolor(String color) {
+		Select sel = new Select(colorselector);
+		sel.selectByValue(color);
 	}
 
+	public void Selectsize(String size) {
+		Select sel = new Select(sizeselector);
+		sel.selectByValue(size);
+	}
+	
+	public void selectquantity()
+	{
+		quantityselector.click();
+	}
+	
+	public void AddtoWishmylist()
+	
+	{
+		wishlisticon.click();
+	}
 }

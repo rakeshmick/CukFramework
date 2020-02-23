@@ -8,8 +8,9 @@ import org.junit.runner.RunWith;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(
-		features = "./src/test/java/resources/End2EndTests.feature",
-		glue= {"com.test.cukframework.stepDefinition"}
+		features = "./src/test/java/resources",
+		glue= {"com.test.cukframework.stepDefinition"},
+		strict = true
 		)
 public class TestRunner {
 
