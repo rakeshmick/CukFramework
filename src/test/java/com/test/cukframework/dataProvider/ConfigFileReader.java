@@ -13,7 +13,7 @@ import com.test.cukframework.enums.EnvironmentType;
 
 public class ConfigFileReader {	
 	private Properties properties;
-	private final String propertyFilePath= "configs//Configuration.properties";
+	private final String propertyFilePath= "./src/test/java/Configuration.properties";
 
 	public ConfigFileReader(){
 		BufferedReader reader;
