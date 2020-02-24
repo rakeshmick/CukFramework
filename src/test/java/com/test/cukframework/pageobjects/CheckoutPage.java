@@ -3,6 +3,8 @@ package com.test.cukframework.pageobjects;
 
 
 import java.util.List;
+
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindAll;
@@ -11,8 +13,11 @@ import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
 
 public class CheckoutPage {
+	WebDriver driver;
+	
 	
 	public CheckoutPage(WebDriver driver) {
+		this.driver= driver;
 	    PageFactory.initElements(driver, this);
 	}
 	
@@ -94,7 +99,9 @@ public class CheckoutPage {
 	}
 	
 	public void select_Country(String countryName) {
-		drpdwn_CountryDropDownArrow.click();
+		JavascriptExecutor js = (JavascriptExecutor)driver;	
+		js.executeScript("arguments[0].click();", drpdwn_CountryDropDownArrow);
+		//drpdwn_CountryDropDownArrow.click();
 		try { Thread.sleep(2000);}
 		catch (InterruptedException e) {}
 
@@ -148,9 +155,10 @@ public class CheckoutPage {
 	public void fill_PersonalDetails() {
 		enter_Name("Aotomation");
 		enter_LastName("Test");
+		select_Country("India");
+
 		enter_Phone("0000000000");
 		enter_Email("Automation@gmail.com");
-		select_Country("India");
 		enter_City("Delhi");
 		enter_Address("Shalimar Bagh");
 		enter_PostCode("110088");
